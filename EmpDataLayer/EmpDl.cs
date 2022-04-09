@@ -91,15 +91,17 @@ namespace EmpDataLayer
         {
             string constr = "Server=localhost;database=TestDatabase;integrated security=true";
             List<Employees> emplist=new List<Employees>();
-            Employees emp=new Employees();
-            string str = "select * from employees";
+           
+            
             using(con=new SqlConnection(constr))
             {
                 con.Open();
+                string str = "select * from employees";
                 cmd = new SqlCommand(str, con);
                 SqlDataReader dr = cmd.ExecuteReader();
                 while(dr.Read()==true)
                 {
+                    Employees emp = new Employees();
                     emp.empnumber = dr.GetInt16(0);
                     emp.empname = dr.GetString(1);
                     emp.department = dr.GetString(2);
