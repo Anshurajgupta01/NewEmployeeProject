@@ -27,8 +27,7 @@ namespace EmpBusinessLayers
         }
         public Employees SearchEmp(int empnumber)
         {
-            return(ed.SearchEmp(empnumber));
-            
+            return(ed.SearchEmp(empnumber));            
         }
         public List<Employees> GetAllEmp()
         {

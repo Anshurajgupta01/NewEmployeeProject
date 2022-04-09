@@ -9,6 +9,23 @@ using Employee;
 
 namespace EmpDataLayer
 {
+    public class TestException : ApplicationException
+    {
+        private string str;
+        public TestException(String message)
+        {
+            this.str = message;
+        }
+
+        public override string Message
+        {
+            get
+            {
+                return this.str;
+            }
+        }
+
+    }
     public class EmpDl:IEmployee
     {
       //  public string constr = "Server=localhost;database=TestDatabase;integrated security=true";
@@ -16,15 +33,35 @@ namespace EmpDataLayer
         SqlCommand cmd;
         public void AddEmp(Employees emp)
         {
-            string constr = "Server=localhost;database=TestDatabase;integrated security=true";
-
-            using (con=new SqlConnection(constr))
+            try
             {
-                con.Open();
-                string str = "insert into employees values('" + emp.empname + "','" + emp.department + "'," + emp.salary + ",'" + emp.joindate + "')";
-                cmd = new SqlCommand(str, con);
-                cmd.ExecuteNonQuery();
+                if (emp.empname == "AAABBB")
+                {
+                    throw (new TestException("Cannot Insert, Give other Name....."));
+                   
+                }
+                else
+                {
+                    string constr = "Server=localhost;database=TestDatabase;integrated security=true";
+
+                    using (con = new SqlConnection(constr))
+                    {
+                        con.Open();
+                        string str = "insert into employees values('" + emp.empname + "','" + emp.department + "'," + emp.salary + ",'" + emp.joindate + "')";
+                        cmd = new SqlCommand(str, con);
+                        cmd.ExecuteNonQuery();
+                    }
+
+                }
+                    
             }
+            catch(Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+            }
+            
+           
+            
         }
         public bool Delete(int empnumber)
         {
@@ -96,12 +133,13 @@ namespace EmpDataLayer
             using(con=new SqlConnection(constr))
             {
                 con.Open();
+                Employees emp;
                 string str = "select * from employees";
                 cmd = new SqlCommand(str, con);
                 SqlDataReader dr = cmd.ExecuteReader();
                 while(dr.Read()==true)
                 {
-                    Employees emp = new Employees();
+                    emp = new Employees();
                     emp.empnumber = dr.GetInt16(0);
                     emp.empname = dr.GetString(1);
                     emp.department = dr.GetString(2);
@@ -119,8 +157,8 @@ namespace EmpDataLayer
             using (con=new SqlConnection(constr))
             {
                 con.Open();
-                string str = "update employees set empname='" + emp.empname + "', salary=" + emp.salary + "department='" + emp.department + "' where empnumber=" +empnumber;
-                cmd = new SqlCommand(str, con);
+                string str = "update employees set empname='" + emp.empname + "', salary=" + emp.salary + ",department='" + emp.department + "' where empnumber=" +empnumber;
+                cmd = new SqlCommand(str,con);
                 cmd.ExecuteNonQuery();
                 
 

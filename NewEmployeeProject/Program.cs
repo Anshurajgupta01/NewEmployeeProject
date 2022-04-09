@@ -13,26 +13,28 @@ namespace NewEmployeeProject
     {
         static void Main(string[] args)
         {
-            //List<Employees> em = new List<Employees>();
             EmpBl bl = new EmpBl(new EmpDl());
-            //Employees e = new Employees() {empname = "Alok", department = "Management", salary = 50000, joindate = DateTime.Parse("12-Jan-2020") };
-            //// bl.Add(e);
+            /*  List<Employees> em = new List<Employees>();
 
-            //Employees delemp = bl.SearchEmp(132);
-            //if (delemp == null)
-            //{
-            //    Console.WriteLine("No such employee");
-            //}
-            //else
-            //    Console.WriteLine(delemp.empname);
-            //// bl.UpdateEmp(131,e);
+              Employees e = new Employees() { empname = "Aryan", department = "L&D", salary = 65000 };
+              // bl.Add(e);
 
-
+              Employees delemp = bl.SearchEmp(132);
+              if (delemp == null)
+              {
+                  Console.WriteLine("No such employee");
+              }
+              else
+                  Console.WriteLine(delemp.empname);
+              bl.UpdateEmp(132, e);
+              bool b = bl.Delete(138);    */
+            Employees e = new Employees() { empname = "AAABBB", department = "L&D", salary = 65000 };
+            bl.Add(e);
             List<Employees> emplist = bl.GetAllEmp();
-
-            foreach(Employees e in emplist)
+            Console.WriteLine(emplist.Count);
+            foreach(Employees emp in emplist)
             {
-                Console.WriteLine(e.empname);
+                Console.WriteLine("{0},{1}",emp.empname,emp.empnumber);
             }
 
 
