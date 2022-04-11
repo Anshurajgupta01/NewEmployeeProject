@@ -17,7 +17,7 @@ namespace NewEmployeeProject
             /*  List<Employees> em = new List<Employees>();
 
               Employees e = new Employees() { empname = "Aryan", department = "L&D", salary = 65000 };
-              // bl.Add(e);
+               bl.Add(e);
 
               Employees delemp = bl.SearchEmp(132);
               if (delemp == null)
@@ -28,8 +28,20 @@ namespace NewEmployeeProject
                   Console.WriteLine(delemp.empname);
               bl.UpdateEmp(132, e);
               bool b = bl.Delete(138);    */
-            Employees e = new Employees() { empname = "AAABBB", department = "L&D", salary = 65000 };
-            bl.Add(e);
+
+            //Employees e = new Employees() { empname = "AcdBB", department = "Finance", salary = 65000,joindate= DateTime.Parse("11-Jun-2020")};
+            //bl.Add(e);
+
+            bool b=bl.Delete(143);
+            if (b == true)
+            {
+                Console.WriteLine("deleted");
+
+            }
+            else
+                Console.WriteLine("No such employee");
+
+
             List<Employees> emplist = bl.GetAllEmp();
             Console.WriteLine(emplist.Count);
             foreach(Employees emp in emplist)

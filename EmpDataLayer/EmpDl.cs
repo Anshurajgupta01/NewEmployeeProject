@@ -47,11 +47,21 @@ namespace EmpDataLayer
                     using (con = new SqlConnection(constr))
                     {
                         con.Open();
-                        string str = "insert into employees values('" + emp.empname + "','" + emp.department + "'," + emp.salary + ",'" + emp.joindate + "')";
-                        cmd = new SqlCommand(str, con);
+                       // string str = "insert into employees values('" + emp.empname + "','" + emp.department + "'," + emp.salary + ",'" + emp.joindate + "')";
+                        
+                        cmd = new SqlCommand("proc_empinsert", con);
+                        cmd.CommandType = System.Data.CommandType.StoredProcedure;
+                        SqlParameter p_empno = new SqlParameter("@empnumber", System.Data.SqlDbType.SmallInt);
+                        p_empno.Direction = System.Data.ParameterDirection.Output;
+                        cmd.Parameters.Add(p_empno);
+                        cmd.Parameters.AddWithValue("@empname", emp.empname);
+                        cmd.Parameters.AddWithValue("@department", emp.department);
+                        cmd.Parameters.AddWithValue("@salary", emp.salary);
+                        cmd.Parameters.AddWithValue("@joindate", emp.joindate);
                         cmd.ExecuteNonQuery();
+                        Console.WriteLine("Row inserted with emp number:{0}",p_empno.Value);
                     }
-
+                    
                 }
                     
             }
@@ -69,8 +79,10 @@ namespace EmpDataLayer
             using (con=new SqlConnection(constr))
             {
                 con.Open();
-                string str="delete from employees where empnumber="+empnumber;
-                cmd = new SqlCommand(str, con);
+              //  string str="delete from employees where empnumber="+empnumber;
+                cmd = new SqlCommand("proc_empdelete", con);
+                cmd.CommandType = System.Data.CommandType.StoredProcedure;
+                cmd.Parameters.AddWithValue("@empnumber", empnumber);
                 int rows = cmd.ExecuteNonQuery();
                 if (rows == 1)
                 {
